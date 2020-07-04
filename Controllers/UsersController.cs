@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace webapi.Controllers
 {
+    [Authorize]
+    [ApiController]
+    [Route("[controller]/[action]")]
     public class UsersController: ControllerBase
     {
         private IUserService _userService;
@@ -23,6 +26,13 @@ namespace webapi.Controllers
             if (user == null)
                 return BadRequest(new { message = "Usuario o Contraseña Incorrecta" });
 
+
+            return Ok(user);
+        }
+
+        [HttpGet]
+        public IActionResult usuarios(){
+            var user = _userService.allUsers();
 
             return Ok(user);
         }

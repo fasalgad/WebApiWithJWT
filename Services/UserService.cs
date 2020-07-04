@@ -25,6 +25,12 @@ namespace webapi.Services
         {
             _appSettings = appSettings.Value;
         }
+
+        public List<User> allUsers()
+        {
+           return _users;
+        }
+
         public User Authenticate(AuthenticateModel userario)
         {
             // var user = new User { id = 1, firstname = "Test", firstsurname = "User", username = "test", password = "test" };
@@ -41,8 +47,6 @@ namespace webapi.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.username),
-                    new Claim(ClaimTypes.UserData, user.firstname),
-                    new Claim(ClaimTypes.Email, user.email),
                     new Claim(ClaimTypes.Role,"Estudiante")
                 }),
                 Expires = DateTime.UtcNow.AddHours(10),
@@ -54,5 +58,7 @@ namespace webapi.Services
             user.token = tokenString;
             return user.WithoutPassword();
         }
+
+
     }
 }
